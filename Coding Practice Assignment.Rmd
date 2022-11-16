@@ -47,11 +47,8 @@ gdp
 ### Cleaning immigration 
 
 ```{r}
-#get rid of unnecessary column
-immigration <- immigration %>% select(-TotalPopulation, -ImmigrationShareofTotalStatePopulation)
-
 #rename of long column
-immigration <- immigration %>% rename(ImmigrationPop = ImmigrationPopulation)
+immigration <- immigration %>% rename(TotalImmigrationPop = TotalPopulation, ImmigrationPop = ImmigrationPopulation, ImmigrationRate = ImmigrationShareofTotalStatePopulation)
 
 immigration
 ```
@@ -110,8 +107,7 @@ dataset
 
 ```{r}
 # generate a variable for each immigration rate and crime rate
-dataset <- dataset %>% mutate(ImmigrationRate = ImmigrationPop / StatePop,
-                              CrimeRate = Crime / StatePop)
+dataset <- dataset %>% mutate(CrimeRate = Crime / ImmigrationPop)
 
 dataset
 ```
