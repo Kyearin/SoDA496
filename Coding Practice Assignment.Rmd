@@ -32,3 +32,50 @@ immigration
 gdp
 unemployment
 ```
+
+## Cleaning 
+
+### cleaning gdp 
+
+```{r}
+#rename of confusing column
+gdp <- gdp %>% rename(StateCode = GeoCode, State = GeoName)
+
+gdp
+```
+
+### Cleaning immigration 
+
+```{r}
+#get rid of unnecessary column
+immigration <- immigration %>% select(-TotalPopulation, -ImmigrationShareofTotalStatePopulation)
+
+#rename of long column
+immigration <- immigration %>% rename(ImmigrationPop = ImmigrationPopulation)
+
+immigration
+```
+
+### Cleaning crime 
+
+```{r}
+#get rid of unnecessary column
+crime <- crime %>% select(-Jail, -TotalPrisoner)
+
+#rename of long column
+crime <- crime %>% rename(StatePop = StatePopulation, Crime = TotalViolentCrime, Rape = TotalRape, Murder = TotalMurder, Robbery = TotalRobbery, Assult = TotalAssult)
+
+crime
+```
+
+### Cleaning unemployment
+
+```{r}
+#rename of long and confusing column
+unemployment <- unemployment %>% rename(Education = EducationAttainment, Unemployment = TotalUnemployment, Native = NationalUnemployment, Foreign = ForeignUnemployment)
+
+#get rid of unnecessary column
+unemployment <- unemployment %>% select(-Country, -CountryCode, -Sex)
+
+unemployment
+```
