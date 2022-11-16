@@ -105,3 +105,28 @@ dataset <- dataset %>% inner_join(unemployment, by = c("Year" = "Year"))
 
 dataset
 ```
+
+## Data Preparation for regression analysis
+
+```{r}
+# generate a variable for each immigration rate and crime rate
+dataset <- dataset %>% mutate(ImmigrationRate = ImmigrationPop / StatePop,
+                              CrimeRate = Crime / StatePop)
+
+dataset
+```
+
+## Cleaning dataset
+
+```{r}
+#deal with missing data
+dataset <- dataset %>% na.omit(dataset)
+```
+
+## Run a simple regression analysis
+
+```{r}
+model <- lm(ImmigrationRate ~ CrimeRate, data = dataset)
+
+summary(model)
+```
