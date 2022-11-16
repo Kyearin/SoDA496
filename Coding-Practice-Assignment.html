@@ -474,27 +474,25 @@ gdp</code></pre>
 </div>
 <div id="cleaning-immigration" class="section level3">
 <h3>Cleaning immigration</h3>
-<pre class="r"><code>#get rid of unnecessary column
-immigration &lt;- immigration %&gt;% select(-TotalPopulation, -ImmigrationShareofTotalStatePopulation)
-
-#rename of long column
-immigration &lt;- immigration %&gt;% rename(ImmigrationPop = ImmigrationPopulation)
+<pre class="r"><code>#rename of long column
+immigration &lt;- immigration %&gt;% rename(TotalImmigrationPop = TotalPopulation, ImmigrationPop = ImmigrationPopulation, ImmigrationRate = ImmigrationShareofTotalStatePopulation)
 
 immigration</code></pre>
-<pre><code>## # A tibble: 255 × 4
-##    State                StateCode  Year ImmigrationPop
-##    &lt;chr&gt;                &lt;chr&gt;     &lt;dbl&gt;          &lt;dbl&gt;
-##  1 Alabama              AL         1990          43500
-##  2 Alaska               AK         1990          24800
-##  3 Arizona              AZ         1990         278200
-##  4 Arkansas             AR         1990          24900
-##  5 California           CA         1990        6458800
-##  6 Colorado             CO         1990         142400
-##  7 Connecticut          CT         1990         279400
-##  8 Delaware             DE         1990          22300
-##  9 District of Columbia DC         1990          58900
-## 10 Florida              FL         1990        1662600
-## # … with 245 more rows</code></pre>
+<pre><code>## # A tibble: 255 × 6
+##    State                StateCode  Year TotalImmigrationPop Immigratio…¹ Immig…²
+##    &lt;chr&gt;                &lt;chr&gt;     &lt;dbl&gt;               &lt;dbl&gt;        &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Alabama              AL         1990             4040600        43500  0.0108
+##  2 Alaska               AK         1990              550000        24800  0.0451
+##  3 Arizona              AZ         1990             3665200       278200  0.0759
+##  4 Arkansas             AR         1990             2350700        24900  0.0106
+##  5 California           CA         1990            29760000      6458800  0.217 
+##  6 Colorado             CO         1990             3294400       142400  0.0432
+##  7 Connecticut          CT         1990             3287100       279400  0.0850
+##  8 Delaware             DE         1990              666200        22300  0.0334
+##  9 District of Columbia DC         1990              606900        58900  0.0970
+## 10 Florida              FL         1990            12937900      1662600  0.129 
+## # … with 245 more rows, and abbreviated variable names ¹​ImmigrationPop,
+## #   ²​ImmigrationRate</code></pre>
 </div>
 <div id="cleaning-crime" class="section level3">
 <h3>Cleaning crime</h3>
@@ -552,89 +550,92 @@ unemployment</code></pre>
 <pre class="r"><code>dataset &lt;- crime %&gt;% inner_join(immigration, by = c(&quot;State&quot; = &quot;State&quot;, &quot;StateCode&quot; = &quot;StateCode&quot;, &quot;Year&quot; = &quot;Year&quot;))
 
 dataset</code></pre>
-<pre><code>## # A tibble: 49 × 10
-##    State       StateC…¹  Year State…²  Crime  Rape Murder Robbery Assult Immig…³
+<pre><code>## # A tibble: 49 × 12
+##    State       StateC…¹  Year State…²  Crime  Rape Murder Robbery Assult Total…³
 ##    &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
-##  1 Alabama     AL        2010  4.79e6  18363  1355    275    4864  11869  1.69e5
-##  2 Alaska      AK        2010  7.14e5   4537   533     31     594   3379  4.93e4
-##  3 Arizona     AZ        2010  6.41e6  26528  2191    408    6953  16976  8.57e5
-##  4 Arkansas    AR        2010  2.92e6  14711  1321    134    2369  10887  1.32e5
-##  5 California  CA        2010  3.73e7 164133  8331   1809   58116  95877  1.02e7
-##  6 Colorado    CO        2010  5.05e6  16339  2230    129    3164  10816  4.97e5
-##  7 Connecticut CT        2010  3.58e6  10083   595    133    3553   5802  4.87e5
-##  8 Delaware    DE        2010  9.00e5   5608   326     51    1839   3392  7.19e4
-##  9 Florida     FL        2010  1.88e7 101969  5373    987   26086  69523  3.66e6
-## 10 Georgia     GA        2010  9.71e6  39068  2107    555   12372  24034  9.43e5
-## # … with 39 more rows, and abbreviated variable names ¹​StateCode, ²​StatePop,
-## #   ³​ImmigrationPop</code></pre>
+##  1 Alabama     AL        2010  4.79e6  18363  1355    275    4864  11869  4.79e6
+##  2 Alaska      AK        2010  7.14e5   4537   533     31     594   3379  7.14e5
+##  3 Arizona     AZ        2010  6.41e6  26528  2191    408    6953  16976  6.41e6
+##  4 Arkansas    AR        2010  2.92e6  14711  1321    134    2369  10887  2.92e6
+##  5 California  CA        2010  3.73e7 164133  8331   1809   58116  95877  3.73e7
+##  6 Colorado    CO        2010  5.05e6  16339  2230    129    3164  10816  5.05e6
+##  7 Connecticut CT        2010  3.58e6  10083   595    133    3553   5802  3.58e6
+##  8 Delaware    DE        2010  9.00e5   5608   326     51    1839   3392  9.00e5
+##  9 Florida     FL        2010  1.88e7 101969  5373    987   26086  69523  1.88e7
+## 10 Georgia     GA        2010  9.71e6  39068  2107    555   12372  24034  9.71e6
+## # … with 39 more rows, 2 more variables: ImmigrationPop &lt;dbl&gt;,
+## #   ImmigrationRate &lt;dbl&gt;, and abbreviated variable names ¹​StateCode,
+## #   ²​StatePop, ³​TotalImmigrationPop</code></pre>
 </div>
 <div id="merging-dataset-and-gdp" class="section level3">
 <h3>Merging dataset and gdp</h3>
 <pre class="r"><code>dataset &lt;- dataset %&gt;% inner_join(gdp, by = c(&quot;State&quot; = &quot;State&quot;, &quot;StateCode&quot; = &quot;StateCode&quot;, &quot;Year&quot; = &quot;Year&quot;))
 
 dataset</code></pre>
-<pre><code>## # A tibble: 49 × 11
-##    State State…¹  Year State…²  Crime  Rape Murder Robbery Assult Immig…³    GDP
-##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 Alab… AL       2010  4.79e6  18363  1355    275    4864  11869  1.69e5 1.85e5
-##  2 Alas… AK       2010  7.14e5   4537   533     31     594   3379  4.93e4 5.46e4
-##  3 Ariz… AZ       2010  6.41e6  26528  2191    408    6953  16976  8.57e5 2.60e5
-##  4 Arka… AR       2010  2.92e6  14711  1321    134    2369  10887  1.32e5 1.06e5
-##  5 Cali… CA       2010  3.73e7 164133  8331   1809   58116  95877  1.02e7 2.04e6
-##  6 Colo… CO       2010  5.05e6  16339  2230    129    3164  10816  4.97e5 2.68e5
-##  7 Conn… CT       2010  3.58e6  10083   595    133    3553   5802  4.87e5 2.44e5
-##  8 Dela… DE       2010  9.00e5   5608   326     51    1839   3392  7.19e4 6.06e4
-##  9 Flor… FL       2010  1.88e7 101969  5373    987   26086  69523  3.66e6 7.75e5
-## 10 Geor… GA       2010  9.71e6  39068  2107    555   12372  24034  9.43e5 4.34e5
-## # … with 39 more rows, and abbreviated variable names ¹​StateCode, ²​StatePop,
-## #   ³​ImmigrationPop</code></pre>
+<pre><code>## # A tibble: 49 × 13
+##    State       StateC…¹  Year State…²  Crime  Rape Murder Robbery Assult Total…³
+##    &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Alabama     AL        2010  4.79e6  18363  1355    275    4864  11869  4.79e6
+##  2 Alaska      AK        2010  7.14e5   4537   533     31     594   3379  7.14e5
+##  3 Arizona     AZ        2010  6.41e6  26528  2191    408    6953  16976  6.41e6
+##  4 Arkansas    AR        2010  2.92e6  14711  1321    134    2369  10887  2.92e6
+##  5 California  CA        2010  3.73e7 164133  8331   1809   58116  95877  3.73e7
+##  6 Colorado    CO        2010  5.05e6  16339  2230    129    3164  10816  5.05e6
+##  7 Connecticut CT        2010  3.58e6  10083   595    133    3553   5802  3.58e6
+##  8 Delaware    DE        2010  9.00e5   5608   326     51    1839   3392  9.00e5
+##  9 Florida     FL        2010  1.88e7 101969  5373    987   26086  69523  1.88e7
+## 10 Georgia     GA        2010  9.71e6  39068  2107    555   12372  24034  9.71e6
+## # … with 39 more rows, 3 more variables: ImmigrationPop &lt;dbl&gt;,
+## #   ImmigrationRate &lt;dbl&gt;, GDP &lt;dbl&gt;, and abbreviated variable names
+## #   ¹​StateCode, ²​StatePop, ³​TotalImmigrationPop</code></pre>
 </div>
 <div id="merging-dataset-and-unemployment" class="section level3">
 <h3>Merging dataset and unemployment</h3>
 <pre class="r"><code>dataset &lt;- dataset %&gt;% inner_join(unemployment, by = c(&quot;Year&quot; = &quot;Year&quot;))
 
 dataset</code></pre>
-<pre><code>## # A tibble: 196 × 15
-##    State  State…¹  Year State…² Crime  Rape Murder Robbery Assult Immig…³    GDP
-##    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  2 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  3 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  4 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  5 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  6 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  7 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  8 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  9 Arizo… AZ       2010 6413158 26528  2191    408    6953  16976  856700 2.60e5
-## 10 Arizo… AZ       2010 6413158 26528  2191    408    6953  16976  856700 2.60e5
-## # … with 186 more rows, 4 more variables: Education &lt;chr&gt;, Unemployment &lt;dbl&gt;,
-## #   Native &lt;dbl&gt;, Foreign &lt;dbl&gt;, and abbreviated variable names ¹​StateCode,
-## #   ²​StatePop, ³​ImmigrationPop</code></pre>
+<pre><code>## # A tibble: 196 × 17
+##    State State…¹  Year State…² Crime  Rape Murder Robbery Assult Total…³ Immig…⁴
+##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  2 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  3 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  4 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  5 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  6 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  7 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  8 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  9 Ariz… AZ       2010 6413158 26528  2191    408    6953  16976 6413700  856700
+## 10 Ariz… AZ       2010 6413158 26528  2191    408    6953  16976 6413700  856700
+## # … with 186 more rows, 6 more variables: ImmigrationRate &lt;dbl&gt;, GDP &lt;dbl&gt;,
+## #   Education &lt;chr&gt;, Unemployment &lt;dbl&gt;, Native &lt;dbl&gt;, Foreign &lt;dbl&gt;, and
+## #   abbreviated variable names ¹​StateCode, ²​StatePop, ³​TotalImmigrationPop,
+## #   ⁴​ImmigrationPop</code></pre>
 </div>
 </div>
 <div id="data-preparation-for-regression-analysis" class="section level2">
 <h2>Data Preparation for regression analysis</h2>
 <pre class="r"><code># generate a variable for each immigration rate and crime rate
-dataset &lt;- dataset %&gt;% mutate(ImmigrationRate = ImmigrationPop / StatePop,
-                              CrimeRate = Crime / StatePop)
+dataset &lt;- dataset %&gt;% mutate(CrimeRate = Crime / ImmigrationPop)
 
 dataset</code></pre>
-<pre><code>## # A tibble: 196 × 17
-##    State  State…¹  Year State…² Crime  Rape Murder Robbery Assult Immig…³    GDP
-##    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
-##  1 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  2 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  3 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  4 Alaba… AL       2010 4785401 18363  1355    275    4864  11869  168600 1.85e5
-##  5 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  6 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  7 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  8 Alaska AK       2010  714146  4537   533     31     594   3379   49300 5.46e4
-##  9 Arizo… AZ       2010 6413158 26528  2191    408    6953  16976  856700 2.60e5
-## 10 Arizo… AZ       2010 6413158 26528  2191    408    6953  16976  856700 2.60e5
-## # … with 186 more rows, 6 more variables: Education &lt;chr&gt;, Unemployment &lt;dbl&gt;,
-## #   Native &lt;dbl&gt;, Foreign &lt;dbl&gt;, ImmigrationRate &lt;dbl&gt;, CrimeRate &lt;dbl&gt;, and
-## #   abbreviated variable names ¹​StateCode, ²​StatePop, ³​ImmigrationPop</code></pre>
+<pre><code>## # A tibble: 196 × 18
+##    State State…¹  Year State…² Crime  Rape Murder Robbery Assult Total…³ Immig…⁴
+##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  2 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  3 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  4 Alab… AL       2010 4785401 18363  1355    275    4864  11869 4785300  168600
+##  5 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  6 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  7 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  8 Alas… AK       2010  714146  4537   533     31     594   3379  714000   49300
+##  9 Ariz… AZ       2010 6413158 26528  2191    408    6953  16976 6413700  856700
+## 10 Ariz… AZ       2010 6413158 26528  2191    408    6953  16976 6413700  856700
+## # … with 186 more rows, 7 more variables: ImmigrationRate &lt;dbl&gt;, GDP &lt;dbl&gt;,
+## #   Education &lt;chr&gt;, Unemployment &lt;dbl&gt;, Native &lt;dbl&gt;, Foreign &lt;dbl&gt;,
+## #   CrimeRate &lt;dbl&gt;, and abbreviated variable names ¹​StateCode, ²​StatePop,
+## #   ³​TotalImmigrationPop, ⁴​ImmigrationPop</code></pre>
 </div>
 <div id="cleaning-dataset" class="section level2">
 <h2>Cleaning dataset</h2>
@@ -651,19 +652,19 @@ summary(model)</code></pre>
 ## lm(formula = ImmigrationRate ~ CrimeRate, data = dataset)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -0.07486 -0.04532 -0.01570  0.03904  0.17395 
+##       Min        1Q    Median        3Q       Max 
+## -0.076043 -0.034107 -0.008142  0.019185  0.144446 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.04095    0.01164   3.518 0.000542 ***
-## CrimeRate   12.95747    3.00762   4.308 2.61e-05 ***
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.141468   0.005598   25.27   &lt;2e-16 ***
+## CrimeRate   -0.874728   0.073527  -11.90   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.05825 on 194 degrees of freedom
-## Multiple R-squared:  0.08732,    Adjusted R-squared:  0.08261 
-## F-statistic: 18.56 on 1 and 194 DF,  p-value: 2.613e-05</code></pre>
+## Residual standard error: 0.04635 on 194 degrees of freedom
+## Multiple R-squared:  0.4218, Adjusted R-squared:  0.4188 
+## F-statistic: 141.5 on 1 and 194 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 
 
