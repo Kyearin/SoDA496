@@ -24,3 +24,11 @@ gdp <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/GDP.xlsx")
 
 unemployment <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/unemployment.xlsx")
 ```
+
+## View all collected datasets
+```{r}
+crime 
+immigration
+gdp
+unemployment
+```
