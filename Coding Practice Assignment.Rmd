@@ -1,0 +1,26 @@
+---
+title: "Coding Practice Assignment"
+author: "Yearin Kim"
+date: "2022-11-17"
+output: html_document
+---
+
+## Front Matter
+
+```{r}
+#clean up the environment
+rm(list = ls())
+
+#libraries
+library(readxl)
+library(tidyverse)
+
+#load excel files
+crime <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/crime_rates.xlsx")
+
+immigration <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/immigration.xlsx")
+
+gdp <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/GDP.xlsx")
+
+unemployment <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/unemployment.xlsx")
+```
