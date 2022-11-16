@@ -16,13 +16,13 @@ library(readxl)
 library(tidyverse)
 
 #load excel files
-crime <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/crime_rates.xlsx")
+crime <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/SoDA496/crime_rates.xlsx")
 
-immigration <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/immigration.xlsx")
+immigration <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/SoDA496/immigration.xlsx")
 
-gdp <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/GDP.xlsx")
+gdp <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/SoDA496/GDP.xlsx")
 
-unemployment <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/unemployment.xlsx")
+unemployment <- read_excel("C:/Users/kzy51/Desktop/SoDA 496/SoDA496/unemployment.xlsx")
 ```
 
 ## View all collected datasets
