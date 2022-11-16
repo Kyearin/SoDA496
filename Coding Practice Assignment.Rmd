@@ -79,3 +79,29 @@ unemployment <- unemployment %>% select(-Country, -CountryCode, -Sex)
 
 unemployment
 ```
+
+## Merging 
+
+### Merging crime and immigration 
+
+```{r}
+dataset <- crime %>% inner_join(immigration, by = c("State" = "State", "StateCode" = "StateCode", "Year" = "Year"))
+
+dataset
+```
+
+### Merging dataset and gdp 
+
+```{r}
+dataset <- dataset %>% inner_join(gdp, by = c("State" = "State", "StateCode" = "StateCode", "Year" = "Year"))
+
+dataset
+```
+
+### Merging dataset and unemployment
+
+```{r}
+dataset <- dataset %>% inner_join(unemployment, by = c("Year" = "Year"))
+
+dataset
+```
