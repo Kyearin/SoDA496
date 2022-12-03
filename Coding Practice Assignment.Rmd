@@ -122,7 +122,7 @@ dataset <- dataset %>% na.omit(dataset)
 ## Run a simple regression analysis
 
 ```{r}
-model <- lm(ImmigrationRate ~ CrimeRate, data = dataset)
+model <- lm(CrimeRate ~ ImmigrationRate, data = dataset)
 
 summary(model)
 ```
@@ -130,6 +130,5 @@ summary(model)
 ## Visualization
 
 ```{r}
-ggplot(data = dataset, mapping = aes(x = CrimeRate, y = ImmigrationRate)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+ggplot(data = dataset, mapping = aes(x = ImmigrationRate, y = CrimeRate)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
 ```
-
