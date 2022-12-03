@@ -126,3 +126,10 @@ model <- lm(ImmigrationRate ~ CrimeRate, data = dataset)
 
 summary(model)
 ```
+
+## Visualization
+
+```{r}
+ggplot(data = dataset, mapping = aes(x = CrimeRate, y = ImmigrationRate)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+```
+
